@@ -1,0 +1,5 @@
+src/main/resources
+bin
+out/production/netty-trial
+out/test/netty-trial
+build/deps

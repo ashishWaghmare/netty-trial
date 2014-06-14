@@ -1,4 +1,5 @@
 apply plugin: "java"
+apply from: "gradle/vertx.gradle"
 apply plugin: "eclipse"
 apply plugin: 'application'
 
@@ -10,16 +11,55 @@ repositories {
 }
  
 dependencies {
-	compile (
-		"io.netty:netty-transport:4.0.20.Final",
-		"io.netty:netty-transport-sctp:4.0.20.Final",
-		"io.netty:netty-handler:4.0.20.Final",
-		"io.netty:netty-codec-http:4.0.20.Final",
-		"io.netty:netty-codec-socks:4.0.20.Final",
-		"com.google.protobuf:protobuf-java:latest.integration",
-		"com.google.inject:guice:latest.integration",
-		"com.google.guava:guava:latest.integration"
-	)
+	compile ( 'org.pac4j:pac4j-core:1.5.1')
+	compile ( 'org.pac4j:pac4j-oauth:1.5.1')
+}
+test {
+  /* Configure which tests are included
+  include 'org/foo/**'
+  exclude 'org/boo/**'
+  */
+
+}
+def configurePom(def pom) {
+  pom.project {
+    name rootProject.name
+    description 'Display vertx with security'
+    inceptionYear '2013'
+    packaging 'jar'
+
+    url 'Your project url'
+
+    developers {
+      developer {
+        id 'ashishWaghmare'
+        name 'Ashish Waghmare'
+        email 'ashishWaghmare@gmail.com'
+      }
+    }
+
+    scm {
+      url 'url to your repo - e.g. github repo url'
+    }
+
+    licenses {
+      license {
+        name 'The name of the license used, e.g.: The Apache Software License, Version 2.0'
+        url 'URl to the license, e.g.: http://www.apache.org/licenses/LICENSE-2.0.txt'
+        distribution 'repo'
+      }
+    }
+
+    properties {
+      setProperty('project.build.sourceEncoding', 'UTF8')
+    }
+  }
+}
+run {
+    if (System.getProperty('DEBUG', 'false') == 'true') {
+        jvmArgs '-Xdebug',
+            '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=9009'
+    }
 }
 
 
